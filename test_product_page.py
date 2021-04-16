@@ -5,6 +5,35 @@ from pages.product_page import ProductPage
 from pages.cart_page import CartPage
 
 
+@pytest.mark.user
+class TestUserAddToCartFromProductPage:
+
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
+        page = LoginPage(browser, "http://selenium1py.pythonanywhere.com/ru/accounts/login/")
+        page.open()
+        email = str(time.time()) + "@fakemail.org"
+        password = "pwdqweqwe"
+        page.register_new_user(email, password)
+        time.sleep(2)
+        page.should_be_authorized_user()
+
+    def test_user_can_add_product_to_cart(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/ru/catalogue/the-shellcoders-handbook_209/?promo=newYear"
+        page = ProductPage(browser, link)
+        page.open()
+        page.add_to_cart()
+        page.solve_quiz_and_get_code()
+        page.should_be_correct_name()
+        page.should_be_correct_price()
+
+    def test_user_cant_see_success_message(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+        page = ProductPage(browser, link)
+        page.open()
+        page.should_not_be_success_message()
+
+
 @pytest.mark.skip
 def test_guest_should_see_add_to_cart_button(browser):
     link = "http://selenium1py.pythonanywhere.com/ru/catalogue/the-shellcoders-handbook_209/?promo=newYear"
@@ -34,7 +63,6 @@ def test_guest_can_add_product_to_cart(browser, link):
     page.open()
     page.add_to_cart()
     page.solve_quiz_and_get_code()
-    time.sleep(100)
     page.should_be_correct_name()
     page.should_be_correct_price()
 
