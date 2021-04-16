@@ -31,6 +31,10 @@ class BasePage:
         login_link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
         login_link.click()
 
+    def go_to_cart_page(self):
+        cart_link = self.browser.find_element(*BasePageLocators.CART_LINK)
+        cart_link.click()
+
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
         x = alert.text.split(" ")[2]
