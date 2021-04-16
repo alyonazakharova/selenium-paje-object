@@ -19,3 +19,4 @@ class ProductPageLocators:
     ADDED_PRODUCT_NAME = (By.XPATH, "//div[@class='alertinner ']/strong")
     PRODUCT_PRICE = (By.XPATH, "//div[contains(@class, 'product_main')]/p[@class='price_color']")
     ADDED_PRODUCT_PRICE = (By.XPATH, "//div[@class='alertinner ']/p/strong")
+    SUCCESS_MESSAGE = (By.XPATH, "//div[@class='alertinner ']")
